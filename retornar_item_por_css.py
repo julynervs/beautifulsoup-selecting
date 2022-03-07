@@ -1,11 +1,11 @@
 #%%
-def retornar_item_por_css(html, dict_filtros):
+def retornar_item_por_css(html, dict_filtros, filtros_ignorados=['Imagem']):
     """
     Função que encontra um item HTML por meio de seletor CSS
 
     Parâmetros: 
         html (str): cópia do elemento body do html da página
-        lista_seletores (list): seletores definidos para fazer a busca
+        dict_seletores (dict): dicionário de seletores definidos para fazer a busca
 
     Retorno:
         item_encontrado (str): conteudo do item encontrado por um dos seletores da lista
@@ -20,13 +20,14 @@ def retornar_item_por_css(html, dict_filtros):
                     return seletor_encontrado
 
     for filtro, seletores in dict_filtros.items():
-        seletor_encontrado = encontrar_seletor(lista_seletores=seletores)
-        # filtro de validação do None
-        # quando o seletor é None, ele não tem index, retornando erro de NoneType
-        if seletor_encontrado != None:
-            # filtra o conteudo do item do seletor
-            item_encontrado = seletor_encontrado[0].text
-            dict_itens_encontrados.update({filtro: item_encontrado})
+        if filtro not in filtros_ignorados:
+            seletor_encontrado = encontrar_seletor(lista_seletores=seletores)
+            # filtro de validação do None
+            # quando o seletor é None, ele não tem index, retornando erro de NoneType
+            if seletor_encontrado != None:
+                # filtra o conteudo do item do seletor
+                item_encontrado = seletor_encontrado[0].text
+                dict_itens_encontrados.update({filtro: item_encontrado})
     return dict_itens_encontrados
 
 def retornar_imagem_por_css(html, seletor_css="img.wp-post-image", atributo="src"):
