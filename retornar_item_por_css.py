@@ -1,5 +1,5 @@
 #%%
-def retornar_item_por_css(html, lista_seletores=["selec q nao existe","","h1.product_title.entry-title"]):
+def retornar_item_por_css(html, dict_filtros):
     """
     Função que encontra um item HTML por meio de seletor CSS
 
@@ -9,22 +9,25 @@ def retornar_item_por_css(html, lista_seletores=["selec q nao existe","","h1.pro
 
     Retorno:
         item_encontrado (str): conteudo do item encontrado por um dos seletores da lista
-    """    
+    """  
+    dict_itens_encontrados = {}  
     # essa função serve pra fazer a busca dos possiveis seletores
-    def encontrar_seletor():
+    def encontrar_seletor(lista_seletores=["selec q nao existe","","h1.product_title.entry-title"]):
         for seletor in lista_seletores:
             if seletor != "":
                 seletor_encontrado = html.select(seletor)
                 if seletor_encontrado != []:
                     return seletor_encontrado
 
-    seletor_encontrado = encontrar_seletor()
-    # filtro de validação do None
-    # quando o seletor é None, ele não tem index, retornando erro de NoneType
-    if seletor_encontrado != None:
-        # filtra o conteudo do item do seletor
-        item_encontrado = seletor_encontrado[0].text
-        return item_encontrado
+    for filtro, seletores in dict_filtros.items():
+        seletor_encontrado = encontrar_seletor(lista_seletores=seletores)
+        # filtro de validação do None
+        # quando o seletor é None, ele não tem index, retornando erro de NoneType
+        if seletor_encontrado != None:
+            # filtra o conteudo do item do seletor
+            item_encontrado = seletor_encontrado[0].text
+            dict_itens_encontrados.update({filtro: item_encontrado})
+    return dict_itens_encontrados
 
 def retornar_imagem_por_css(html, seletor_css="img.wp-post-image", atributo="src"):
     """
