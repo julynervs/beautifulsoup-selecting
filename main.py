@@ -14,9 +14,8 @@ from selenium_chamar_driver import iniciar_navegador
 from time import sleep
 
 driver = iniciar_navegador()
-driver.get("https://donadega.com.br/produto/370-leguas-d-o-c-douro-2020-branco-vinho-portugues/")
+url, body = retornar_body(driver, url="https://donadega.com.br/produto/370-leguas-d-o-c-douro-2020-branco-vinho-portugues/", definir_url=True)
 sleep(5)
-url, body = retornar_body(driver)
 html = BeautifulSoup(body, "html.parser")
 
 # teste retornar item
