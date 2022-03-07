@@ -18,8 +18,9 @@ def retornar_item_por_css(html, dict_filtros, filtros_ignorados=['Imagem']):
                 seletor_encontrado = html.select(seletor)
                 if seletor_encontrado != []:
                     return seletor_encontrado
-
+    # percorre o dicionario com os seletores de cada filtro
     for filtro, seletores in dict_filtros.items():
+        # validação pro caso de algum item cuja chave não tenha uma lista como valor, como a imagem
         if filtro not in filtros_ignorados:
             seletor_encontrado = encontrar_seletor(lista_seletores=seletores)
             # filtro de validação do None
@@ -27,6 +28,7 @@ def retornar_item_por_css(html, dict_filtros, filtros_ignorados=['Imagem']):
             if seletor_encontrado != None:
                 # filtra o conteudo do item do seletor
                 item_encontrado = seletor_encontrado[0].text
+                # atualiza dicionario com os itens encontrados
                 dict_itens_encontrados.update({filtro: item_encontrado})
     return dict_itens_encontrados
 
