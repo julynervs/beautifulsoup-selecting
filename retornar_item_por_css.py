@@ -1,6 +1,6 @@
 def retornar_item_por_css(html, lista_seletores=["selec q nao existe","","h1.product_title.entry-title"]):
     """
-    Função que encontra item HTML por seletores CSS
+    Função que encontra um item HTML por meio de seletor CSS
 
     Parâmetros: 
         html (str): cópia do elemento body do html da página
